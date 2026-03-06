@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMC Spot News：广深港高铁“公交化”时代</title>
+    <!-- 使用简洁现代的设计，干净字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.1);
+            overflow: hidden;
+            padding: 2rem 2rem 1.5rem 2rem;
+        }
+        /* 数据来源标签 */
+        .source-badge {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #64748b;
+            background: #f1f5f9;
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+        .source-badge a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .source-badge a:hover {
+            text-decoration: underline;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 0.5rem 0 0.25rem 0;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #0f2b5e, #1e4a8b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subhead {
+            font-size: 1.2rem;
+            color: #334155;
+            border-left: 4px solid #2563eb;
+            padding-left: 1.2rem;
+            margin: 1rem 0 2rem 0;
+            font-weight: 400;
+        }
+        /* 卡片布局 */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .card {
+            background: #ffffff;
+            border: 1px solid #e9eef2;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            transition: all 0.1s ease;
+        }
+        .card:hover {
+            border-color: #cbd5e1;
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: #0b2a4e;
+        }
+        .card-title .emoji {
+            font-size: 1.3rem;
+        }
+        .data-number {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1.2;
+        }
+        .data-label {
+            color: #475569;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .data-meta {
+            font-size: 0.85rem;
+            color: #5f6c80;
+            margin-top: 0.5rem;
+            border-top: 1px dashed #dee4e9;
+            padding-top: 0.75rem;
+        }
+        /* 可视化占位 */
+        .chart-placeholder {
+            background: #f1f6fc;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1.2rem 0 0.8rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #2c3e5c;
+            border: 1px solid #dbe4ed;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .chart-label {
+            font-weight: 500;
+            background: white;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            color: #1e3a8a;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        .insight {
+            background: #f0f7ff;
+            border-radius: 14px;
+            padding: 1.2rem;
+            margin-top: 1.5rem;
+            border-left: 5px solid #2563eb;
+        }
+        .insight p {
+            margin-bottom: 0.5rem;
+        }
+        .footer-note {
+            font-size: 0.8rem;
+            color: #5f6c80;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .footer-note div {
+            margin-right: 2rem;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #ecf3fa;
+            margin: 2rem 0 1rem;
+        }
+        .section-tag {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #2563eb;
+            margin-bottom: 0.25rem;
+        }
+        /* 响应式 */
+        @media (max-width: 800px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
+        }
+        /* 迷你表格 */
+        .mini-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+        }
+        .mini-table td {
+            padding: 0.5rem 0.2rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .mini-table tr:last-child td { border-bottom: none; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 头部 -->
+    <span class="source-badge">⏱️ 最新发布 · 2026年3月6日</span>
+    <h1>广深港高铁“公交化”时代</h1>
+    <div class="subhead">开年跨境客流破550万，2分钟一班背后：是谁在流动？为什么而流动？</div>
+    
+    <!-- 第一层：现象 · 核心数据卡片 -->
+    <div class="section-tag">📊 现象 · 破纪录的春运与日常</div>
+    <div class="grid-3">
+        <div class="card">
+            <div class="card-title"><span class="emoji">🚄</span> 总跨境客流 (1-2月)</div>
+            <div class="data-number">558.06万</div>
+            <div class="data-label">较去年同期 +12.3%</div>
+            <div class="chart-placeholder">
+                <span class="chart-label">📈 柱状图：历年1-2月对比</span>
+                <div style="display: flex; justify-content:center; gap:1rem; padding:0.5rem 0;">
+                    <span style="background:#1e3a8a; width:40px; height:80px; border-radius:6px 6px 0 0;"></span>
+                    <span style="background:#2563eb; width:40px; height:92px; border-radius:6px 6px 0 0;"></span>
+                    <span style="background:#3b82f6; width:40px; height:110px; border-radius:6px 6px 0 0;"></span>
+                </div>
+                <div style="font-size:0.8rem;">2024 · 2025 · 2026</div>
+            </div>
+            <div class="data-meta">来源：深圳铁路部门 · 人民网 <a href="#">[1]</a></div>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="emoji">🔄</span> 双向分布</div>
+            <div class="data-number">288.8万 <span style="font-size:1.2rem;">→</span> 269.2万</div>
+            <div class="data-label">内地→香港 / 香港→内地</div>
+            <div class="chart-placeholder">
+                <span class="chart-label">🥧 堆叠柱状图 / 饼图</span>
+                <div style="display: flex; align-items:center; justify-content:center; gap:0.5rem; margin:0.5rem 0;">
+                    <span style="background:#2563eb; width:80px; height:20px; border-radius:20px;"></span>
+                    <span style="background:#38bdf8; width:74px; height:20px; border-radius:20px;"></span>
+                </div>
+                <div>内地→香港 51.8% · 香港→内地 48.2%</div>
+            </div>
+            <div class="data-meta">来源：深圳铁路部门 · 南方都市报 <a href="#">[2]</a></div>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="emoji">⏲️</span> 开行密度</div>
+            <div class="data-number">382列/日</div>
+            <div class="data-label">春运日均 · 高峰2分钟一班</div>
+            <div class="chart-placeholder">
+                <span class="chart-label">🌡️ 密度热力图(时间轴)</span>
+                <div style="display:flex; justify-content:center; gap:2px; padding:0.5rem;">
+                    <span style="background:#075985; width:10px; height:40px;"></span>
+                    <span style="background:#2563eb; width:10px; height:60px;"></span>
+                    <span style="background:#38bdf8; width:10px; height:80px;"></span>
+                    <span style="background:#7dd3fc; width:10px; height:95px;"></span>
+                    <span style="background:#bae6fd; width:10px; height:70px;"></span>
+                </div>
+                <div>早高峰 7-9点 · 晚高峰 17-19点</div>
+            </div>
+            <div class="data-meta">来源：深圳铁路部门 · 央视新闻 <a href="#">[3]</a></div>
+        </div>
+    </div>
+
+    <!-- 附加数据：1月上旬 vs 1月全月（日常基数） -->
+    <div style="background:#f1f5fe; border-radius:16px; padding:1.2rem 1.8rem; margin:1.5rem 0;">
+        <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
+            <div><span class="data-label">📅 1月上旬 (春运前)</span> <span class="data-number" style="font-size:2rem;">8.48万</span> <span style="color:#475569;">日均客流</span></div>
+            <div><span class="data-label">📆 1月全月</span> <span class="data-number" style="font-size:2rem;">8.51万</span> <span style="color:#475569;">日均客流</span></div>
+            <div style="border-left:2px solid #b9d2f0; padding-left:1.5rem;">
+                <span style="background:#e0f2fe; padding:0.2rem 1rem; border-radius:40px; font-weight:600;">✨ 日常基数与春运几乎持平 → 刚性需求底色</span>
+            </div>
+        </div>
+        <div class="data-meta" style="margin-top:0.5rem;">来源：深圳铁路部门（据中新网报道）</div>
+    </div>
+
+    <hr>
+
+    <!-- 第二层：拆解 · 人群画像与出行意图 -->
+    <div class="section-tag">👥 拆解 · 谁是“常客”？</div>
+    <div class="grid-2">
+        <div class="card">
+            <div class="card-title"><span class="emoji">💼</span> 商务通勤 · 工作驱动</div>
+            <ul style="margin:0.8rem 0; list-style-type: none; padding-left:0;">
+                <li style="margin-bottom:0.5rem;">🔹 深圳往返香港客流占比 <strong>63%</strong> (短途高频)</li>
+                <li style="margin-bottom:0.5rem;">🔹 福田站“港商服务站”已接待 <strong>1.4万+</strong> 港企，提供 <strong>5600+</strong> 次服务</li>
+                <li style="margin-bottom:0.5rem;">🔹 案例：广州番禺郭先生“一个半小时到香港，频率高了很多”</li>
+            </ul>
+            <div class="chart-placeholder" style="min-height:80px;">
+                <span class="chart-label">🧭 流向占比图</span>
+                深圳方向占63% · 广州方向占18% · 其他19%
+            </div>
+            <div class="data-meta">来源：经济日报 <a href="#">[4]</a> · 深圳特区报</div>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="emoji">🎒</span> 研学 · 银发 · 跨境消费</div>
+            <ul style="margin:0.8rem 0; list-style-type: none; padding-left:0;">
+                <li>🔹 香港沙田官立小学“同根同心”研学团</li>
+                <li>🔹 银发族“一个人的旅行”：香港阿叔错峰游重庆</li>
+                <li>🔹 “高铁+演唱会”：内地粉丝赴港观演，当晚往返</li>
+                <li>🔹 2025年旅游专列 <strong>60+班</strong> (张家界、潮汕等)</li>
+            </ul>
+            <div class="chart-placeholder" style="min-height:80px;">
+                <span class="chart-label">🧩 出行目的饼图 (估算)</span>
+                商务/通勤 45% · 旅游/探亲 35% · 研学/其他 20%
+            </div>
+            <div class="data-meta">来源：港铁公司·新华社 <a href="#">[5]</a></div>
+        </div>
+    </div>
+
+    <!-- 第三层：印证 · 高铁站变身“社区” -->
+    <div class="section-tag">🏢 印证 · 站点功能升级</div>
+    <div class="grid-3">
+        <div class="card">
+            <div class="card-title"><span class="emoji">🏛️</span> 福田站港商服务站</div>
+            <div class="data-number">1.4万+ 企业</div>
+            <div class="data-label">接待港企数量 (2024年至今)</div>
+            <div class="data-meta">提供注册、银行、税务咨询等5600+次服务</div>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="emoji">📈</span> 西九龙站商业升级</div>
+            <div class="data-number">+20%</div>
+            <div class="data-label">通车以来港式餐饮零售面积增幅</div>
+            <div class="data-meta">旅客停留时间延长，消费场景丰富</div>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="emoji">🤝</span> 虎门站招商窗口</div>
+            <div class="data-number">“第一站”</div>
+            <div class="data-label">东莞虎门站成港商投资桥头堡</div>
+            <div class="data-meta">工作人员与港商“处成朋友”，周末常驻东莞</div>
+        </div>
+    </div>
+
+    <!-- 第四层：未来 · 制度创新倒逼公交化 -->
+    <div class="section-tag">🚀 未来 · 从“公交化”到“通勤革命”</div>
+    <div class="card" style="background: linear-gradient(145deg, #f6fbff, #ffffff);">
+        <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
+            <div style="flex: 1;">
+                <span style="background:#1e3a8a; color:white; padding:0.2rem 1rem; border-radius:40px; font-size:0.8rem; font-weight:600;">提案建议 2026</span>
+                <div style="margin:1rem 0;">
+                    <div style="margin-bottom:0.8rem;">✅ <strong>自由席+指定席</strong> (随到随走，参考日本新干线)</div>
+                    <div style="margin-bottom:0.8rem;">✅ <strong>月票套餐</strong> (低至单程票6折)</div>
+                    <div style="margin-bottom:0.8rem;">✅ <strong>信用乘车</strong> (常旅客先乘后付)</div>
+                    <div style="margin-bottom:0.8rem;">✅ <strong>通关提速</strong> (90%旅客 ≤3分钟)</div>
+                </div>
+                <div class="data-meta">来源：港区政协委员提案 · 大公报 <a href="#">[6]</a></div>
+            </div>
+            <div style="flex: 0 0 160px;">
+                <div class="chart-placeholder" style="background:#dbeafe;">
+                    <span class="chart-label">📅 制度演进时间轴</span>
+                    一地两检(2018) → 灵活行(2024) → 公交化提案(2026)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 站点扩展数据 (关联) -->
+    <div style="background:#f1f5f9; border-radius:16px; padding:1.2rem 1.8rem; margin:2rem 0;">
+        <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center;">
+            <div><span class="data-label">📍 直达内地站点</span> <span class="data-number" style="font-size:2rem;">44 → 110</span> <span style="color:#475569;">(2018→2026)</span></div>
+            <div><span class="data-label">📌 新增省份</span> 江苏·安徽·福建·广东粤东</div>
+            <div><span class="data-label">🚩 2026.1.26</span> 新增16站，覆盖19省市</div>
+        </div>
+        <div class="data-meta" style="margin-top:0.5rem;">来源：大公网 · 广州日报 <a href="#">[7]</a></div>
+    </div>
+
+    <!-- 洞察总结 (呼应学姐提问) -->
+    <div class="insight">
+        <p><strong>🔍 数据洞察：流动常态化，而非节日特供</strong></p>
+        <p>• 1月上旬日均8.48万 vs 1月全月8.51万 → <strong>日常刚需撑起底色，春运只是放大器</strong>。<br>
+        • 63%客流集中在深港之间，港商服务站服务1.4万企业 → <strong>工作驱动是核心引擎</strong>。<br>
+        • 西九龙商业增20%、旅游专列60+班 → <strong>生活方式迁移，跨境成为日常选择</strong>。<br>
+        • 从“灵活行”到“月票提案” → <strong>高频流动倒逼制度创新，公交化只是开始</strong>。</p>
+    </div>
+
+    <!-- 数据来源总览 -->
+    <div class="footer-note">
+        <div><strong>📎 原始数据源</strong><br>
+        深圳铁路部门 · 广铁集团 · 港铁公司 · 深圳市交通运输局 · 入境事务处
+        </div>
+        <div><strong>📰 主要媒体报道</strong><br>
+        <a href="#">[1] 人民网</a> · <a href="#">[2] 南方都市报</a> · <a href="#">[3] 央视新闻</a> · <a href="#">[4] 经济日报</a> · <a href="#">[5] 新华社</a> · <a href="#">[6] 大公报</a> · <a href="#">[7] 广州日报</a>
+        </div>
+        <div><strong>⚡ DMC Spot News</strong> · 数据驱动 · 快速响应 · 清晰呈现</div>
+    </div>
+    <div style="text-align:right; font-size:0.8rem; color:#94a3b8; margin-top:1rem;">可视化图表为示意图，实际发布时将替换为真实数据图形</div>
+</div>
+<!-- 注：所有链接均为示意，实际需替换为原始URL -->
+</body>
+</html>
