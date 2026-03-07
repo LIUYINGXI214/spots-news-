@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广深港高铁公交化 · 湾区融合数据密码</title>
+    <!-- 字体与基础样式 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #faf8f6;
+            color: #1f2937;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+        .chapter {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+            border-bottom: 1px solid #eae2d7;
+        }
+        .chapter:last-of-type { border-bottom: none; }
+        .chapter-header {
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .chapter-number {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #c65f27;
+            background: #f0e3d8;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+        }
+        .chapter-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2c3e4e;
+        }
+        .hero {
+            max-width: 1280px;
+            margin: 0 auto 2rem;
+            padding: 4rem 2rem 0;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #b13e1b, #cc6d2c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            max-width: 900px;
+        }
+        .hero .subhead {
+            font-size: 1.25rem;
+            color: #5f4e41;
+            border-left: 5px solid #d9732b;
+            padding-left: 1.5rem;
+            margin-top: 1rem;
+            max-width: 750px;
+        }
+        .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 2rem; margin: 2rem 0; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; margin: 2rem 0; }
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.02), 0 0 0 1px #f0e4d9;
+            transition: all 0.2s;
+            opacity: 0; transform: translateY(30px) scale(0.98);
+            transition: opacity 0.7s cubic-bezier(0.2,0.9,0.3,1), transform 0.7s cubic-bezier(0.2,0.9,0.3,1);
+        }
+        .card.visible { opacity: 1; transform: translateY(0) scale(1); }
+        .card-title {
+            font-size: 1.1rem; font-weight: 600; color: #9b4b26; margin-bottom: 1rem;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .data-number { font-size: 2.8rem; font-weight: 700; color: #1f2937; line-height: 1.1; }
+        .data-label { color: #736b63; font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+        .data-meta { font-size: 0.8rem; color: #9f897a; margin-top: 1rem; border-top: 1px dashed #e1cfbd; padding-top: 0.75rem; }
+        
+        /* 图表容器 */
+        .chart-container {
+            margin: 2rem 0 1rem;
+            background: #f9f3ed;
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+        .chart-title {
+            font-size: 1rem; font-weight: 600; color: #9b4b26; margin-bottom: 1rem;
+        }
+        .bar-chart {
+            display: flex; align-items: flex-end; gap: 1rem; justify-content: center;
+            min-height: 200px;
+        }
+        .bar-wrapper {
+            display: flex; flex-direction: column; align-items: center; width: 60px;
+        }
+        .bar {
+            width: 40px; background: #d9732b; border-radius: 8px 8px 0 0;
+            transition: height 1s;
+        }
+        .bar-label { font-size: 0.8rem; color: #5f4e41; margin-top: 0.5rem; }
+        .line-chart {
+            display: flex; align-items: flex-end; gap: 1rem; justify-content: center;
+            height: 200px; border-bottom: 2px solid #ccc; position: relative;
+        }
+        .line-point {
+            display: flex; flex-direction: column; align-items: center; width: 50px;
+        }
+        .point {
+            width: 10px; height: 10px; background: #d9732b; border-radius: 50%; margin-bottom: 5px;
+        }
+        .line-label { font-size: 0.8rem; color: #5f4e41; }
+        /* 辅助 */
+        .stat-row {
+            background: #f9efe6; border-radius: 40px; padding: 1.5rem 2rem; margin: 2rem 0;
+            display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;
+            opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s;
+        }
+        .stat-row.visible { opacity: 1; transform: translateY(0); }
+        .stat-item { display: flex; flex-direction: column; }
+        .stat-value { font-size: 2rem; font-weight: 700; color: #1f2937; }
+        .stat-desc { color: #7a5f4b; }
+        .insight-block {
+            background: #f2ebe3; border-radius: 28px; padding: 2rem; margin: 3rem 0;
+            border-left: 6px solid #d9732b;
+            opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s;
+        }
+        .insight-block.visible { opacity: 1; transform: translateY(0); }
+        .footer-note {
+            font-size: 0.8rem; color: #9f897a; border-top: 1px solid #e1cfbd;
+            padding-top: 2rem; margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 2rem;
+        }
+        @media (max-width:800px) { .grid-2, .grid-3 { grid-template-columns:1fr; } .hero h1 { font-size:2.5rem; } }
+    </style>
+</head>
+<body>
+<div class="hero">
+    <span style="background:#f0e3d8; color:#c65f27; padding:0.2rem 1rem; border-radius:30px;">DMC Spot News · 2026.03.06</span>
+    <h1>广深港高铁“公交化”时代</h1>
+    <div class="subhead">每天8.5万人跨境，63%在深港之间——30万通勤族正在把双城变成同城</div>
+</div>
+
+<!-- 第一章：现象 · 破纪录的数字 -->
+<section class="chapter">
+    <div class="chapter-header"><span class="chapter-number">第一章</span><span class="chapter-title">现象 · 破纪录的数字</span></div>
+    <div class="grid-3">
+        <div class="card" data-animate="true">
+            <div class="card-title"><span class="emoji">🚄</span> 总跨境客流 (1-2月)</div>
+            <div><span class="data-number" data-target="558.06" data-suffix="万">0</span></div>
+            <div class="data-label">较去年同期 +12.3%</div>
+            <div class="data-meta">来源：深圳铁路部门 · 人民网</div>
+        </div>
+        <div class="card" data-animate="true">
+            <div class="card-title"><span class="emoji">🔄</span> 双向分布</div>
+            <div><span class="data-number" data-target="288.82" data-suffix="万">0</span> <span style="font-size:1.5rem;">→</span> <span class="data-number" data-target="269.24" data-suffix="万">0</span></div>
+            <div class="data-label">内地→香港 / 香港→内地</div>
+            <div style="display:flex; gap:1rem; justify-content:center; margin:1rem 0;">
+                <span style="background:#d9732b; width:100px; height:20px; border-radius:20px;"></span>
+                <span style="background:#f6b17e; width:94px; height:20px; border-radius:20px;"></span>
+            </div>
+            <div class="data-meta">来源：深圳铁路部门</div>
+        </div>
+        <div class="card" data-animate="true">
+            <div class="card-title"><span class="emoji">⏲️</span> 开行密度</div>
+            <div><span class="data-number" data-target="382" data-suffix="列/日">0</span></div>
+            <div class="data-label">春运日均 · 高峰2分钟一班</div>
+            <div class="data-meta">来源：深圳铁路部门</div>
+        </div>
+    </div>
+    <!-- 历年客流变化图 (柱状) -->
+    <div class="chart-container">
+        <div class="chart-title">📊 年度跨境客流量变化 (万人次)</div>
+        <div class="bar-chart">
+            <div class="bar-wrapper"><div class="bar" style="height:80px;"></div><span class="bar-label">2023 2127</span></div>
+            <div class="bar-wrapper"><div class="bar" style="height:114px;"></div><span class="bar-label">2024 3040</span></div>
+            <div class="bar-wrapper"><div class="bar" style="height:134px;"></div><span class="bar-label">2025 3579</span></div>
+            <div class="bar-wrapper"><div class="bar" style="height:130px;"></div><span class="bar-label">2026* 558(1-2月)</span></div>
+        </div>
+        <div class="data-meta" style="margin-top:0.5rem;">*2026年仅1-2月，年化推算约3300万</div>
+    </div>
+    <!-- 历年日均开行列数变化 (折线示意) -->
+    <div class="chart-container">
+        <div class="chart-title">📈 日均开行列数变化 (列/日)</div>
+        <div class="line-chart">
+            <div class="line-point"><div class="point" style="margin-top:160px;"></div><span class="line-label">2018 ~50</span></div>
+            <div class="line-point"><div class="point" style="margin-top:120px;"></div><span class="line-label">2023 77</span></div>
+            <div class="line-point"><div class="point" style="margin-top:50px;"></div><span class="line-label">2024 130</span></div>
+            <div class="line-point"><div class="point" style="margin-top:40px;"></div><span class="line-label">2025 173</span></div>
+            <div class="line-point"><div class="point" style="margin-top:0px;"></div><span class="line-label">2026 382</span></div>
+        </div>
+        <div style="display:flex; justify-content:center; gap:2rem; margin-top:1rem; font-size:0.9rem;">
+            <span>2018开通初期</span> <span>2023恢复</span> <span>2024</span> <span>2025</span> <span>2026春运</span>
+        </div>
+    </div>
+</section>
+
+<!-- 第二章：春运的启示 · 日常刚需的底色 -->
+<section class="chapter">
+    <div class="chapter-header"><span class="chapter-number">第二章</span><span class="chapter-title">春运的启示 · 日常刚需的底色</span></div>
+    <div class="stat-row" data-animate="true">
+        <div class="stat-item"><span class="stat-value" data-target="8.48" data-suffix="万">0</span><span class="stat-desc">1月上旬日均 (春运前)</span></div>
+        <div class="stat-item"><span class="stat-value" data-target="8.51" data-suffix="万">0</span><span class="stat-desc">1月全月日均</span></div>
+        <div class="stat-item"><span class="stat-value" data-target="8.6" data-suffix="万">0</span><span class="stat-desc">春运期间日均 (估算)</span></div>
+        <div class="stat-highlight" style="background:#e7d7c7; padding:0.5rem 1.5rem; border-radius:40px;">✨ 日常基数与春运几乎持平 → 刚性需求底色</div>
+    </div>
+    <!-- 1月分周柱状图 (模拟) -->
+    <div class="chart-container">
+        <div class="chart-title">📅 2026年1月分周日均客流 (万人次)</div>
+        <div class="bar-chart">
+            <div class="bar-wrapper"><div class="bar" style="height:100px;"></div><span class="bar-label">第1周 8.48</span></div>
+            <div class="bar-wrapper"><div class="bar" style="height:101px;"></div><span class="bar-label">第2周 8.50</span></div>
+            <div class="bar-wrapper"><div class="bar" style="height:103px;"></div><span class="bar-label">第3周 8.55</span></div>
+            <div class="bar-wrapper"><div class="bar" style="height:105px;"></div><span class="bar-label">第4周 8.60</span></div>
+        </div>
+        <div class="data-meta">注：第3周起进入春运，客流微升</div>
+    </div>
+    <div class="card" data-animate="true" style="margin-top:2rem;">
+        <div class="card-title">🔍 数据解读</div>
+        <p style="font-size:1.1rem;">春运前日均8.48万，全月日均8.51万，春运期间仅微涨至8.6万——说明<b>每天都有超过8万人跨境，春节只是在这个巨大基数上叠加了探亲流</b>。真正的故事是日常的刚需。</p>
+    </div>
+</section>
+
+<!-- 第三章：谁在流动？通勤与消费双轮驱动 -->
+<section class="chapter">
+    <div class="chapter-header"><span class="chapter-number">第三章</span><span class="chapter-title">谁在流动？通勤与消费双轮驱动</span></div>
+    <div class="grid-2">
+        <div class="card" data-animate="true">
+            <div class="card-title"><span class="emoji">💼</span> 工作通勤 · 30万双城族</div>
+            <ul style="margin:1rem 0; list-style:none;">
+                <li style="margin-bottom:0.8rem;">🔹 深港往返占63% → 推定每天约30万通勤人口</li>
+                <li style="margin-bottom:0.8rem;">🔹 福田站港商服务站：接待1.4万+港企</li>
+                <li>🔹 跨境学童约2.7万人</li>
+            </ul>
+            <div class="data-meta">案例：林律师，住深圳福田，香港中环上班，14分钟通勤</div>
+        </div>
+        <div class="card" data-animate="true">
+            <div class="card-title"><span class="emoji">🎒</span> 休闲消费 · 周末跨城生活</div>
+            <ul style="margin:1rem 0; list-style:none;">
+                <li style="margin-bottom:0.8rem;">🔹 周末客流比平日高15-20%</li>
+                <li style="margin-bottom:0.8rem;">🔹 西九龙站商业面积增长20%</li>
+                <li style="margin-bottom:0.8rem;">🔹 2025年旅游专列60+班</li>
+                <li>🔹 “高铁+演唱会”当晚往返成新潮流</li>
+            </ul>
+            <div class="data-meta">案例：广州小陈，周五赴港看偶像演唱会，周日返</div>
+        </div>
+    </div>
+    <!-- 周末vs平日对比柱状图 -->
+    <div class="chart-container">
+        <div class="chart-title">📊 平日 vs 周末日均客流 (2026年1月)</div>
+        <div class="bar-chart">
+            <div class="bar-wrapper"><div class="bar" style="height:100px;"></div><span class="bar-label">周一~周四 8.4万</span></div>
+            <div class="bar-wrapper"><div class="bar" style="height:115px;"></div><span class="bar-label">周五~周日 9.7万</span></div>
+        </div>
+        <div class="data-meta">周末客流高出约15%，休闲消费驱动明显</div>
+    </div>
+</section>
+
+<!-- 第四章：融合效应 · 从双城到同城 -->
+<section class="chapter">
+    <div class="chapter-header"><span class="chapter-number">第四章</span><span class="chapter-title">融合效应 · 从双城到同城</span></div>
+    <div class="grid-2">
+        <div class="card" data-animate="true">
+            <div class="card-title">📍 空间融合</div>
+            <div class="data-number">14分钟</div>
+            <div class="data-label">深圳↔香港，比香港内部通勤更快</div>
+        </div>
+        <div class="card" data-animate="true">
+            <div class="card-title">🔄 身份融合</div>
+            <div class="data-number">30万</div>
+            <div class="data-label">每天跨境工作/生活的“湾区人”</div>
+        </div>
+    </div>
+    <!-- 制度创新时间轴示意 -->
+    <div class="chart-container">
+        <div class="chart-title">📅 制度创新时间轴</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem 0;">
+            <span style="background:#d9732b; color:white; padding:0.3rem 1rem; border-radius:30px;">2018 一地两检</span>
+            <span style="background:#f0e3d8; padding:0.3rem 1rem; border-radius:30px;">2024 灵活行</span>
+            <span style="background:#f0e3d8; padding:0.3rem 1rem; border-radius:30px;">2026 月票提案</span>
+        </div>
+        <p class="data-meta" style="margin-top:1rem;">高频流动倒逼规则创新，公交化只是开始</p>
+    </div>
+    <!-- 总结洞察 -->
+    <div class="insight-block" data-animate="true">
+        <p><strong>🔍 数据洞察：湾区融合进行时</strong></p>
+        <p>• 每天8.5万人跨境，63%在深港之间 → <strong>日常通勤成为融合的骨架</strong></p>
+        <p>• 周末客流高15%，消费场景多元化 → <strong>生活方式融合成为血肉</strong></p>
+        <p>• 从一地两检到月票提案 → <strong>制度创新正在被流动倒逼</strong></p>
+        <p>• 30万双城族用高铁投票，把“两制”之下的两个城市，投成一座“超级都市”</p>
+    </div>
+</section>
+
+<!-- 页脚 -->
+<div style="max-width:1280px; margin:0 auto; padding:0 2rem 4rem;">
+    <div class="footer-note">
+        <div><strong>📎 数据源</strong> 深圳铁路部门 · 广铁集团 · 港铁公司 · 深圳市交通运输局 · 入境事务处</div>
+        <div><strong>📰 报道</strong> 人民网 · 南方都市报 · 央视新闻 · 经济日报 · 新华社 · 大公报</div>
+    </div>
+</div>
+
+<!-- 滚动动画 + 数字滚动 -->
+<script>
+(function() {
+    const animated = document.querySelectorAll('[data-animate="true"], .card, .stat-row, .insight-block');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                animateNumbers(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+    animated.forEach(el => observer.observe(el));
+    // 额外观察背景块
+    document.querySelectorAll('.stat-row, .insight-block').forEach(el => { if(!el.hasAttribute('data-animate')) observer.observe(el); });
+
+    function animateNumbers(container) {
+        const nums = container.querySelectorAll('.data-number, .stat-value');
+        nums.forEach(el => {
+            if(el.dataset.animated === 'true') return;
+            const target = parseFloat(el.dataset.target);
+            if(isNaN(target)) return;
+            el.dataset.animated = 'true';
+            const suffix = el.dataset.suffix || '';
+            let current = 0;
+            const duration = 1500;
+            const start = performance.now();
+            function step(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const value = current + (target - current) * progress;
+                el.textContent = (Number.isInteger(target) ? Math.round(value) : value.toFixed(2)) + suffix;
+                if(progress < 1) requestAnimationFrame(step);
+                else el.textContent = target.toFixed(2) + suffix;
+            }
+            requestAnimationFrame(step);
+        });
+    }
+    // 页面加载时检查可视区域
+    window.addEventListener('load', () => {
+        animated.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if(rect.top < window.innerHeight - 100 && rect.bottom > 0) {
+                el.classList.add('visible');
+                animateNumbers(el);
+                observer.unobserve(el);
+            }
+        });
+    });
+})();
+</script>
+</body>
+</html>
